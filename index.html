@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mezmur Voice Detector — name that mezmur</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="brand">🎙️ Mezmur Detector</div>
+    <nav>
+      <a href="#detect">Detect</a>
+      <a href="#how">How it would work</a>
+      <a href="#library">Starter library</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Heard a mezmur you can't name?</h1>
+    <p class="lede">You know the moment — a Tigrinya or Amharic song is playing, at church, at a wedding, in a car, and you love it but have no idea what it's called or who sings it. My idea is a Shazam for mezmur and Habesha music: hold up your phone, let it listen, get the name back.</p>
+    <p class="demo-banner">⚠️ This page is the working interface of that idea. <strong>There is no trained model behind it yet</strong> — the detection result is a clearly labeled placeholder so the full flow can be tried. Read the honest section below before believing any "result."</p>
+  </section>
+
+  <section id="detect" class="card">
+    <h2>Try the flow</h2>
+    <div class="detect-grid">
+      <div>
+        <label class="upload-box" id="uploadBox">
+          <input type="file" id="audioFile" accept="audio/*" hidden>
+          <span class="upload-icon">🎵</span>
+          <span class="upload-text">Upload an audio clip</span>
+          <span class="upload-sub">mp3, m4a, wav — stays on your device</span>
+        </label>
+        <button class="btn-secondary" id="micBtn" type="button">🎤 Or tap to "listen" (demo)</button>
+        <p class="file-line" id="fileLine">No clip loaded yet.</p>
+        <audio id="player" controls hidden></audio>
+        <button class="btn-primary" id="analyzeBtn" type="button" disabled>Identify this song</button>
+      </div>
+      <div class="result-panel" id="resultPanel">
+        <h3>Result</h3>
+        <div id="resultBody">
+          <p class="muted">Load a clip and press <strong>Identify this song</strong>. The result panel will show exactly what the real app would return — and what's still placeholder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="card">
+    <h2>How the real version would work</h2>
+    <ol class="steps">
+      <li><strong>Fingerprint the audio.</strong> Turn the clip into a compact audio fingerprint (the way Shazam does) or a feature embedding with a small neural net.</li>
+      <li><strong>Match against a labeled library.</strong> Compare the fingerprint to a database of known Tigrinya/Amharic songs and mezmur, each labeled with title, singer, and where it's usually sung.</li>
+      <li><strong>Return the best match with a confidence.</strong> If nothing clears the confidence bar, the app should say "not sure" instead of guessing — especially for mezmur, where different churches sing the same hymn differently.</li>
+    </ol>
+    <h3>What a real model needs (that doesn't exist yet)</h3>
+    <ul class="needs">
+      <li>A <strong>labeled dataset</strong>: hundreds of recordings of Tigrinya/Amharic songs and mezmur, each tagged with the correct title — recording rights and church/community permission matter here.</li>
+      <li><strong>Variation coverage</strong>: the same mezmur sung by different choirs, at different speeds, in living rooms and churches with reverb and crowd noise.</li>
+      <li>Either an audio-fingerprinting pipeline (good for exact recordings) or a <strong>trained classifier</strong> (better for live singing of the same hymn) — probably both.</li>
+      <li>People from the community checking the matches. A wrong title on a religious song isn't a small error.</li>
+    </ul>
+  </section>
+
+  <section id="library" class="card">
+    <h2>Starter library it would recognize</h2>
+    <p>These are the kinds of entries the real database would hold. The full organizer I'm building lives in my <a href="https://github.com/abrham-dawit/catholic-mezmur" target="_blank" rel="noopener">catholic-mezmur</a> project — this detector would sit on top of a library like that, plus community-contributed recordings.</p>
+    <div class="lib-grid" id="libGrid"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap"><p>Mezmur Voice Detector — the interface of my song-identification idea, honest about what's not built yet. Plain HTML, CSS, and JavaScript.</p></div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
